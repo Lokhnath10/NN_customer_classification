@@ -13,69 +13,99 @@ In their existing market, the sales team has classified all customers into 4 seg
 You are required to help the manager to predict the right group of the new customers.
 
 ## Neural Network Model
-
-Include the neural network model diagram.
+<img width="625" alt="Screenshot 2025-03-21 at 9 32 27 AM" src="https://github.com/user-attachments/assets/4b1a57eb-89f1-4897-b674-ff3e6093f17e" />
 
 ## DESIGN STEPS
 
-### STEP 1:
-Write your own steps
+### Step 1: 
+Import necessary libraries and load the dataset.
 
-### STEP 2:
+### Step 2: 
+Encode categorical variables and normalize numerical features.
 
-### STEP 3:
+### Step 3: 
+Split the dataset into training and testing subsets.
 
+### Step 4: 
+Design a multi-layer neural network with appropriate activation functions.
+
+### Step 5: 
+Train the model using an optimizer and loss function.
+
+### Step 6: 
+Evaluate the model and generate a confusion matrix.
+
+### Step 7: 
+Use the trained model to classify new data samples.
+
+### Step 8: 
+Display the confusion matrix, classification report, and predictions.
 
 ## PROGRAM
 
-### Name: 
-### Register Number:
+### Name: Lokhnath J
+### Register Number: 212223240079
 
 ```python
 class PeopleClassifier(nn.Module):
     def __init__(self, input_size):
         super(PeopleClassifier, self).__init__()
-        #Include your code here
-
-
-
+        self.fc1 = nn.Linear(input_size, 32)
+        self.fc2 = nn.Linear(32, 16)
+        self.fc3 = nn.Linear(16, 8)
+        self.fc4 = nn.Linear(8, 4)
     def forward(self, x):
-        #Include your code here
-        
-
+        x=F.relu(self.fc1(x))
+        x=F.relu(self.fc2(x))
+        x=F.relu(self.fc3(x))
+        x=self.fc4(x)
+        return x
 ```
 ```python
 # Initialize the Model, Loss Function, and Optimizer
+model =PeopleClassifier(input_size=X_train.shape[1])
+criterion =nn.CrossEntropyLoss()
+optimizer =optim.Adam(model.parameters(),lr=0.001)
 
 
 ```
 ```python
-def train_model(model, train_loader, criterion, optimizer, epochs):
-    #Include your code here
+def train_model(model,train_loader,criterion,optimizer,epochs):
+  for epoch in range(epochs):
+    model.train()
+    for X_batch,y_batch in train_loader:
+      optimizer.zero_grad()
+      outputs=model(X_batch)
+      loss=criterion(outputs,y_batch)
+      loss.backward()
+      optimizer.step()
+
+  if(epoch+1)%10==0:
+    print(f'Epoch [{epoch+1}/{epochs}],Loss:{loss.item():.4f}')
 ```
 
 
 
 ## Dataset Information
-
-Include screenshot of the dataset
+<img width="1055" alt="Screenshot 2025-03-21 at 9 18 45 AM" src="https://github.com/user-attachments/assets/db025efe-f30c-4433-bf56-9a40b6c703f0" />
 
 ## OUTPUT
 
 
 
 ### Confusion Matrix
+![image](https://github.com/user-attachments/assets/bec3c14b-aef1-4bb3-bf74-abddd7c97e12)
 
-Include confusion matrix here
 
 ### Classification Report
+![image](https://github.com/user-attachments/assets/051db92d-4d99-4dc6-ba98-a53057f93e0a)
 
-Include Classification Report here
 
 
 ### New Sample Data Prediction
+![image](https://github.com/user-attachments/assets/c26d7b4f-921f-4760-b29d-ac7737643910)
 
-Include your sample input and output here
+
 
 ## RESULT
-Include your result here
+Thus, a neural network classification model for the given dataset as been created successfully.
